@@ -1,4 +1,6 @@
-﻿<ul class="list-unstyled">
+﻿@inject HttpClient Http
+
+<ul class="list-unstyled">
     @foreach (var product in Product)
    {
        <li class="oi-media-pause my-3">
@@ -15,7 +17,7 @@
                </a>
                <p>@product.Description</p>
                <h5 class="price">
-                   @product.Price zł
+                   @product.Price zl
                </h5>
            </div>
        </li>
@@ -23,27 +25,14 @@
 </ul>
 
 @code {
-    private static List<Products> Product = new List<Products>{
-        new Products{
-            Id = 1,
-            Title = "Uni Pork Pie Wool Hat",
-            Description = "70% wool / 30% polyester. The Pork Pie from Stetson deliberately dispenses with elaborate details.",
-            ImageUrl = "https://images.crafters.fr/pim/MABCF/thumb/beechfield_B630_BLACK.png",
-            Price = 99.99m
-        },
-        new Products{
-            Id = 2,
-            Title = "Chapeau Urban Trilby Grey",
-            Description = "50% wool / 50% polyester. Fully lined. Unisex model.",
-            ImageUrl = "https://www.crafters.fr/images/stories/virtuemart/tt2016/PS_B635_GREY.jpg",
-            Price = 75.5m
-        },
-        new Products{
-            Id = 3,
-            Title = "Chapeau Panama Natural",
-            Description = "89% paper fiber / 11% polyester - 6cm brim - Supplied with removable black fabric strip.",
-            ImageUrl = "https://images.crafters.fr/bo/16951_60b0a8a70fd08_PS_KP068_NATURAL.png",
-            Price = 59.99m
+    private static List<Products> Product = new List<Products>();
+
+    protected override async Task OnInitializedAsync(){
+        var result = await Http.GetFromJsonAsync<List<Products>>("api/Product");
+        if (result != null)
+        {
+            Product = result;
         }
-    };
+    }
+        
 }
