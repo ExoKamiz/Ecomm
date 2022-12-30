@@ -1,4 +1,5 @@
 ﻿using Ecomm.Server.Data;
+using Ecomm.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecomm.Server.Controllers
@@ -8,19 +9,19 @@ namespace Ecomm.Server.Controllers
 
     public class ProductController : Controller
     {
-        private readonly DataContext _context;
+        private readonly IProductService _productService;
 
-        public ProductController(DataContext context)
+        public ProductController(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
         [HttpGet]
 
-        public async Task<ActionResult<List<Products>>> GetProduct()
+        public async Task<ActionResult<ServiceResponse<List<Products>>>> GetProduct()
         {
-            var product = await _context.ProductsC.ToListAsync();
-            return Ok(product);
+            var result = await _productService.GetProductsAsync();
+            return Ok(result);
         }
     }
 }

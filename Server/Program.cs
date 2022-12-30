@@ -1,7 +1,8 @@
 global using Ecomm.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using Ecomm.Server.Data;
-using Microsoft.AspNetCore.ResponseCompression;
+ using Microsoft.AspNetCore.ResponseCompression;
+using Ecomm.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,9 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();// ?
 builder.Services.AddSwaggerGen();// ?
+
+//Vova help 1.2
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
