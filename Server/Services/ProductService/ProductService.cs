@@ -1,4 +1,4 @@
-﻿namespace Ecomm.Server.Services
+﻿namespace Ecomm.Server.Services.ProductService
 {
     public class ProductService : IProductService
     {
@@ -31,6 +31,18 @@
             {
                 Data = await _context.ProductsC.ToListAsync()
             };
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<Products>>> GetProductsByCategory(string categoryUrl)
+        {
+            var response = new ServiceResponse<List<Products>>
+            {
+                Data = await _context.ProductsC
+                   .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
+                   .ToListAsync()
+            };
+
             return response;
         }
     }

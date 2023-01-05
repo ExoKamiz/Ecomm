@@ -1,8 +1,9 @@
 global using Ecomm.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using Ecomm.Server.Data;
- using Microsoft.AspNetCore.ResponseCompression;
-using Ecomm.Server.Services;
+using Microsoft.AspNetCore.ResponseCompression;
+using Ecomm.Server.Services.ProductService;
+using Ecomm.Server.Services.CategoryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddSwaggerGen();// ?
 
 //Vova help 1.2
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 
